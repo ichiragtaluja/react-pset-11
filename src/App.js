@@ -71,7 +71,7 @@ function App() {
     inputByUser: "",
     searchInput: "",
     sortByPrice: null,
-    checkBox: [],
+    checkBox: ["inStock"],
   };
 
   const [filterAppliedByUser, dispatch] = useReducer(filterReducer, initial);
@@ -98,7 +98,8 @@ function App() {
 
   return (
     <>
-      <div>
+      <h1>NeogMart</h1>
+      <div className="input-search">
         <label>
           Search:{" "}
           <input
@@ -112,54 +113,61 @@ function App() {
           Search Data
         </button>
       </div>
-      <div>
-        <label>
-          Price: High to Low
-          <input
-            value="lowToHigh"
-            onChange={(e) =>
-              dispatch({ type: "PRICE_SORT", payload: e.target.value })
-            }
-            name="price "
-            type="radio"
-          />
-        </label>
-        <label>
-          Price: Low to High
-          <input
-            value="highToLow"
-            onChange={(e) =>
-              dispatch({ type: "PRICE_SORT", payload: e.target.value })
-            }
-            name="price "
-            type="radio"
-          />
-        </label>
+      <div className="input-radio">
+        <fieldset>
+          <legend>Sort By</legend>
+          <label>
+            Price: High to Low
+            <input
+              value="lowToHigh"
+              onChange={(e) =>
+                dispatch({ type: "PRICE_SORT", payload: e.target.value })
+              }
+              name="price "
+              type="radio"
+            />
+          </label>
+          <label>
+            Price: Low to High
+            <input
+              value="highToLow"
+              onChange={(e) =>
+                dispatch({ type: "PRICE_SORT", payload: e.target.value })
+              }
+              name="price "
+              type="radio"
+            />
+          </label>
+        </fieldset>
       </div>
-      <div>
-        <label>
-          Include Out of Stock
-          <input
-            type="checkbox"
-            value="inStock"
-            onChange={(e) =>
-              dispatch({ type: "CHECKBOX", payload: e.target.value })
-            }
-          />
-        </label>
-        <label>
-          Fast Delivery Only
-          <input
-            value="fastDelivery"
-            onChange={(e) =>
-              dispatch({ type: "CHECKBOX", payload: e.target.value })
-            }
-            type="checkbox"
-          />
-        </label>
+      <div className="input-checkbox">
+        <fieldset>
+          <legend>Filters</legend>
+          <label>
+            Include Out of Stock
+            <input
+              checked={!filterAppliedByUser.checkBox.includes("inStock")}
+              type="checkbox"
+              value="inStock"
+              onChange={(e) =>
+                dispatch({ type: "CHECKBOX", payload: e.target.value })
+              }
+            />
+          </label>
+          <label>
+            Fast Delivery Only
+            <input
+              value="fastDelivery"
+              onChange={(e) =>
+                dispatch({ type: "CHECKBOX", payload: e.target.value })
+              }
+              type="checkbox"
+            />
+          </label>
+        </fieldset>
       </div>
 
-      <div className="App" style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="App" >
         {processedData.map(
           ({
             id,
@@ -171,16 +179,7 @@ function App() {
             level,
             fastDelivery,
           }) => (
-            <div
-              key={id}
-              style={{
-                border: "1px solid #4B5563",
-                borderRadius: "0 0 0.5rem 0.5rem",
-                margin: "1rem",
-                maxWidth: "40%",
-                padding: "0 0 1rem",
-              }}
-            >
+            <div className="card" key={id}>
               <img src={image} width="100%" height="auto" alt={productName} />
               <h3> {name} </h3>
               <div>Rs. {price}</div>
