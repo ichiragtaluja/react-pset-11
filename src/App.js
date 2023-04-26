@@ -75,6 +75,7 @@ function App() {
   };
 
   const [filterAppliedByUser, dispatch] = useReducer(filterReducer, initial);
+  
   let processedData = filterAppliedByUser.searchInput.length
     ? data.filter((data) =>
         data.name
